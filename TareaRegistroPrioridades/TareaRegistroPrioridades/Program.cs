@@ -10,7 +10,6 @@ namespace TareaRegistroPrioridades
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
-
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
@@ -21,7 +20,6 @@ namespace TareaRegistroPrioridades
             options.UseSqlite(ConStr));
 
             builder.Services.AddScoped<Prioridadbll>();
-
 
             var app = builder.Build();
 
