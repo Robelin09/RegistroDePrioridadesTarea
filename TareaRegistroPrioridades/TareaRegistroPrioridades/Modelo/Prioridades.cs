@@ -1,6 +1,14 @@
-﻿namespace TareaRegistroPrioridades.Modelo
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace TareaRegistroPrioridades.Modelo
 {
     public class Prioridades
     {
+        [Key]
+        public int PrioridadId { get; set; }
+        [Required(ErrorMessage = "Este campo Obligatorio")]
+        public string? Descripción { get; set; }
+        [Range(1, 31, ErrorMessage = "Valores Validos entre 1 y 31")]
+        public int DiasCompromiso { get; set; }
     }
 }
