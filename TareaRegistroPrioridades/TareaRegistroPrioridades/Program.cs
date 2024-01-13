@@ -1,4 +1,7 @@
+using Microsoft.EntityFrameworkCore;
+using TareaRegistroPrioridades.BLL;
 using TareaRegistroPrioridades.Components;
+using TareaRegistroPrioridades.DAL;
 
 namespace TareaRegistroPrioridades
 {
@@ -11,6 +14,14 @@ namespace TareaRegistroPrioridades
             // Add services to the container.
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
+
+            var ConStr = builder.Configuration.GetConnectionString("ConStr");
+
+            builder.Services.AddDbContext<Contexto>(options =>
+            options.UseSqlite(ConStr));
+
+            builder.Services.AddScoped<Prioridadbll>();
+
 
             var app = builder.Build();
 
