@@ -9,9 +9,9 @@ namespace TareaRegistroPrioridades.BLL
     {
         private readonly Contexto contexto;
 
-        public Prioridadbll(Contexto contexto)
+        public Prioridadbll(Contexto scontexto)
         {
-            contexto = contexto;
+            scontexto = scontexto;
         }
         public bool Existe(int RegistroPrioridadId)
         {

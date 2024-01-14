@@ -1,0 +1,99 @@
+﻿@page "/RegistroPrioridad"
+@page "/RegistroPrioridad/{RegistroPrioridadId:int}"
+@inject Prioridadbll prioridadbll
+@rendermode InteractiveServer
+<PageTitle>Registro de Prioridad</PageTitle>
+
+<EditForm Model="prioridades" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+
+    <div class="card">
+        <div class="card-header">
+            <h1>Registro Prioridad</h1>
+        </div>
+        <div class="card-body">
+            <label>ID:</label>
+            <div class="input-group">
+                <InputNumber @bind-Value="prioridades.PrioridadId" class="id-input"></InputNumber>
+                <button type="button" class="btn btn-primary bi bi-search" @onclick="Buscar"></button>
+            </div>
+            <div>
+                <label>Descripcion:</label>
+                <InputText @bind-Value="prioridades.Descripcion" class="form-control"></InputText>
+                <ValidationMessage For="@(() => prioridades.Descripcion)" />
+            </div>
+            <div>
+                <label>Dias compromiso:</label>
+                <InputNumber @bind-Value="prioridades.DiasCompromiso" class="form-control"></InputNumber>
+                <ValidationMessage For="@(() => prioridades.DiasCompromiso)" />
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-primary" @onclick="Nuevo">Nuevo <i class="bi bi-file-earmark-diff-fill" /></button>
+            <button type="submit" class="btn btn-success">Guardar <i class="bi bi-floppy-fill" /></button>
+            @*           <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar <i class="bi bi-trash-fill" /></button>*@
+        </div>
+     
+
+
+    </div>
+
+
+
+
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public int RegistroPrioridadId { get; set; }
+
+    public Prioridades prioridades { get; set; } = new Prioridades();
+
+    protected override void OnInitialized()
+    {
+        if (RegistroPrioridadId > 0)
+        {
+            this.prioridades.PrioridadId = RegistroPrioridadId;
+            this.Buscar();
+        }
+    }
+    void Buscar()
+    {
+        var prioridadesEncontrada = prioridadbll.Buscar(prioridades.PrioridadId);
+        if (prioridadesEncontrada != null)
+        {
+            Modelo.Prioridades prioridadesEncontrada1 = prioridadesEncontrada;
+
+        }
+    }
+
+    void Nuevo()
+    {
+        this.prioridades = new Prioridades();
+    }
+
+    void Guardar()
+    {
+        if (!Validar())
+        {
+            return;
+        }
+        if (prioridadbll.Guardar(this.prioridades))
+            this.Nuevo();
+    }
+
+    bool Validar()
+    {
+        bool esValido = true;
+        var prioridadesEncontrada = prioridadbll.Buscar(prioridades.PrioridadId);
+        if (prioridadesEncontrada != null)
+        {
+            esValido = false;
+        }
+        return esValido;
+    }
+
+
+
+}
