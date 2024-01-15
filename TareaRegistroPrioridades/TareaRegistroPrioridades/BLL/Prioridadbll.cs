@@ -9,9 +9,9 @@ namespace TareaRegistroPrioridades.BLL
     {
         private readonly Contexto contexto;
 
-        public Prioridadbll(Contexto scontexto)
+        public Prioridadbll(Contexto contexto)
         {
-            scontexto = scontexto;
+            this.contexto = contexto;
         }
         public bool Existe(int RegistroPrioridadId)
         {
@@ -21,6 +21,7 @@ namespace TareaRegistroPrioridades.BLL
         {
             contexto.Prioridades.Add(Prioridades);
             return contexto.SaveChanges() > 0;
+       
         }
         public bool Modificar(Prioridades Prioridades)
         {

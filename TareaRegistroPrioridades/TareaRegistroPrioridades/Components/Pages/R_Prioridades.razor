@@ -31,13 +31,13 @@
         <div class="card-footer">
             <button type="button" class="btn btn-primary" @onclick="Nuevo">Nuevo <i class="bi bi-file-earmark-diff-fill" /></button>
             <button type="submit" class="btn btn-success">Guardar <i class="bi bi-floppy-fill" /></button>
-            @*           <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar <i class="bi bi-trash-fill" /></button>*@
+            <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar <i class="bi bi-trash-fill" /></button>
         </div>
      
 
 
     </div>
-
+    <h3>@Mensaje</h3>
 
 
 
@@ -47,6 +47,7 @@
 
     [Parameter]
     public int RegistroPrioridadId { get; set; }
+    public string Mensaje = "Bienvenido";
 
     public Prioridades prioridades { get; set; } = new Prioridades();
 
@@ -71,7 +72,9 @@
     void Nuevo()
     {
         this.prioridades = new Prioridades();
+        Mensaje = " ";
     }
+
 
     void Guardar()
     {
@@ -79,19 +82,32 @@
         {
             return;
         }
-        if (prioridadbll.Guardar(this.prioridades))
-            this.Nuevo();
+        {
+            if (prioridadbll.Guardar(this.prioridades))
+            {
+                this.Nuevo();
+                Mensaje = "Sus datos han sido guardados correctamente.";
+            }
+        }
     }
 
     bool Validar()
     {
         bool esValido = true;
-        var prioridadesEncontrada = prioridadbll.Buscar(prioridades.PrioridadId);
-        if (prioridadesEncontrada != null)
-        {
-            esValido = false;
-        }
         return esValido;
+    }
+
+    void Eliminar()
+    {
+        if (!prioridadbll.Existe(prioridades.PrioridadId))
+        {
+            Mensaje = "No existe esta prioridad para eliminar";
+            return;
+        }
+        if (prioridadbll.Eliminar(this.prioridades))
+        {
+            Mensaje = "Datos Eliminados";
+        }
     }
 
 
