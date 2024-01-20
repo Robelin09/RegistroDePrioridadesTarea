@@ -10,6 +10,5 @@ namespace TareaRegistroPrioridades.DAL
 
         }
         public DbSet<Prioridades> Prioridades { get; set; }
-
     }
 }

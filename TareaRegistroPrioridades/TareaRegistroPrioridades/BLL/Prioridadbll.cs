@@ -21,7 +21,7 @@ namespace TareaRegistroPrioridades.BLL
         {
             contexto.Prioridades.Add(Prioridades);
             return contexto.SaveChanges() > 0;
-       
+
         }
         public bool Modificar(Prioridades Prioridades)
         {

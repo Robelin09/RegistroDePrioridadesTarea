@@ -20,7 +20,7 @@ namespace TareaRegistroPrioridades.Migrations
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
 
             modelBuilder.Entity("TareaRegistroPrioridades.Modelo.Prioridades", b =>
-                {
+            {
                     b.Property<int>("PrioridadId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");

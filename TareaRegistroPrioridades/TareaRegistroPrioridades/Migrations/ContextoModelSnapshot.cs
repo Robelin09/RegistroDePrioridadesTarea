@@ -16,9 +16,9 @@ namespace TareaRegistroPrioridades.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.1");
 
-            modelBuilder.Entity("TareaRegistroPrioridades.Modelo.Prioridades", b =>
+            modelBuilder.Entity("TareaRegistroPrioridades.Modelo.Clientes", b =>
                 {
-                    b.Property<int>("PrioridadId")
+                    b.Property<int>("ClientesId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -29,9 +29,9 @@ namespace TareaRegistroPrioridades.Migrations
                     b.Property<int>("DiasCompromiso")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("PrioridadId");
+                    b.HasKey("ClientesId");
 
-                    b.ToTable("Prioridades");
+                    b.ToTable("Clientes");
                 });
 #pragma warning restore 612, 618
         }
