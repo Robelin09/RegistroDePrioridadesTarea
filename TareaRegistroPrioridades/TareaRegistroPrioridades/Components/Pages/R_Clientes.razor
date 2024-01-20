@@ -1,0 +1,142 @@
+﻿@page "/RegistroClientes"
+@page "/RegistroClientes/{RegistroClientesId:int}"
+@inject ClientesBLL clientesbll
+@rendermode InteractiveServer
+
+<PageTitle>Registro de Clientes</PageTitle>
+
+<EditForm Model="clientes" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />    
+
+        <div class="card">
+            <div class="card-header">
+                <h1>Registro de Clientes</h1>
+            </div>
+            <div class="card-body">
+                <label>ID</label>
+                <div class="input-group">
+                    <InputNumber @bind-Value="clientes.ClienteId" class="id-input"></InputNumber>
+                    <button type="button" class="btn btn-primary bi bi-search" @onclick="Buscar"></button>
+                </div>
+                <div>
+                    <label>Nombres</label>
+                    <InputText @bind-Value="clientes.Nombres" class="form-control"></InputText>
+                    <validationMessage For="@(() => clientes.Nombres)" />
+                </div>
+                <div>
+                <label>T&eacutelefono:</label>
+                    <InputText @bind-Value="clientes.Telefono" class="form-control"></InputText>
+                    <validationMessage For="@(() => clientes.Telefono)"/>
+                </div>
+                <div>
+                    <label>Celular</label>
+                    <InputText @bind-Value="clientes.Celular" class="form-control"></InputText>
+                    <validationMessage For="@(() => clientes.Celular)"/>
+                </div>
+                <div>
+                    <label>RNC</label>
+                    <InputText @bind-Value="clientes.RNC" class="form-control"></InputText>
+                    <validationMessage For="@(() => clientes.RNC)"/>
+                </div>
+                <div>
+                    <label>Email</label>
+                    <InputText @bind-Value="clientes.Email" class="form-control"></InputText>
+                    <validationMessage For="@(() => clientes.Email)"/>
+                </div>
+                <div>
+                    <label>Direcci&oacuten</label>
+                    <InputText @bind-Value="clientes.Direccion" class="form-control"></InputText>
+                    <validationMessage For="@(() => clientes.Direccion)"/>
+                </div>
+            </div>
+            <div class="card-footer">
+            <button type="button" class="btn btn-primary" @onclick="Nuevo">Nuevo <i class="bi bi-file-earmark-diff-fill" /></button>
+            <button type="submit" class="btn btn-success">Guardar <i class="bi bi-floppy-fill" /></button>
+            <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar <i class="bi bi-trash-fill" /></button>
+
+            </div>
+
+           
+        </div>
+
+ 
+
+        <h4>@Mensaje</h4>
+
+
+
+</EditForm>
+
+
+
+@code {
+
+    [Parameter]
+    public int RegistroClientesId { get; set; }
+    public string Mensaje = " ";
+
+    public Clientes clientes { get; set; } = new Clientes();
+
+protected override void OnInitialized()
+    {
+        if (RegistroClientesId > 0)
+        {
+            this.clientes.ClienteId = RegistroClientesId;
+            this.Buscar();
+        }
+    }
+
+    void Buscar()
+    {
+        var clientesEncontrada = clientesbll.Buscar(clientes.ClienteId);
+        if (clientesEncontrada != null)
+        {
+            Modelo.Clientes clientesEncontrada1 = clientesEncontrada;
+        }
+    }
+
+
+
+void Nuevo()
+    {
+        this.clientes = new Clientes();
+        Mensaje = " ";
+    }
+
+    void Guardar()
+    {
+        if (!Validar())
+        {
+            Mensaje = "Sus datos no han sido guardados correctamente.";
+            return;
+        }
+        {
+            if (clientesbll.Guardar(this.clientes))
+            {
+                this.Nuevo();
+                Mensaje = "Sus datos han sido guardados correctamente.";
+            }
+        }
+    }
+
+bool Validar()
+    {
+        bool esValido = true;
+        return esValido;
+    }
+
+    void Eliminar()
+    {
+        if (!clientesbll.Existe(clientes.ClienteId))
+        {
+            Mensaje = "No existen datos para eliminar";
+            return;
+        }
+        if (clientesbll.Eliminar(this.clientes))
+        {
+            Mensaje = "Datos Eliminados";
+        }
+    }
+
+
+}
