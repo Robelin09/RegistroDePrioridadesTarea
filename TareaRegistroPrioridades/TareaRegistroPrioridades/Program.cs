@@ -20,6 +20,7 @@ namespace TareaRegistroPrioridades
             options.UseSqlite(ConStr));
 
             builder.Services.AddScoped<Prioridadbll>();
+            builder.Services.AddScoped<ClientesBLL>();
 
             var app = builder.Build();
 

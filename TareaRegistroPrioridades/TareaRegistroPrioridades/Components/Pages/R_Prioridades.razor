@@ -18,12 +18,12 @@
                 <button type="button" class="btn btn-primary bi bi-search" @onclick="Buscar"></button>
             </div>
             <div>
-                <label>Descripcion:</label>
+                <label>Descripci&oacuten:</label>
                 <InputText @bind-Value="prioridades.Descripcion" class="form-control"></InputText>
                 <ValidationMessage For="@(() => prioridades.Descripcion)" />
             </div>
             <div>
-                <label>Dias compromiso:</label>
+                <label>D&iacuteas Compromiso</label>
                 <InputNumber @bind-Value="prioridades.DiasCompromiso" class="form-control"></InputNumber>
                 <ValidationMessage For="@(() => prioridades.DiasCompromiso)" />
             </div>
@@ -33,13 +33,8 @@
             <button type="submit" class="btn btn-success">Guardar <i class="bi bi-floppy-fill" /></button>
             <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar <i class="bi bi-trash-fill" /></button>
         </div>
-     
-
-
     </div>
     <h3>@Mensaje</h3>
-
-
 
 </EditForm>
 
@@ -109,7 +104,4 @@
             Mensaje = "Datos Eliminados";
         }
     }
-
-
-
 }
