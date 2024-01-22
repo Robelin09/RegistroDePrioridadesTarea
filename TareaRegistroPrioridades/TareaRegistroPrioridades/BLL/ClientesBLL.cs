@@ -56,6 +56,5 @@ namespace TareaRegistroPrioridades.BLL
                     .AsNoTracking()
                     .ToList();
         }       
-
     }
 }
