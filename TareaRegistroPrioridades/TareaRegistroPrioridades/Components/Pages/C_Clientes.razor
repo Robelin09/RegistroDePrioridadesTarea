@@ -1,0 +1,49 @@
+﻿@page "/ConsultaClientes"
+@inject ClientesBLL clientesBLL
+
+<h3>Consulta de Clientes</h3>
+
+<div class="table-responsive">
+    <table class="table table-striped table-bordered">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombres</th>
+                <th>T&eacutelefono</th>
+                <th>Celular</th>
+                <th>RNC</th>
+                <th>Email</th>
+                <th>Direcci&oacuten</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cliente in ListaClientes)
+            {
+                <tr>
+                    <td><a href="/RegistroClientes/@cliente.ClienteId">@cliente.ClienteId</a></td>
+                    <td>@cliente.Nombres</td>
+                    <td>@cliente.Telefono</td>
+                    <td>@cliente.Celular</td>
+                    <td>@cliente.RNC</td>
+                    <td>@cliente.Email</td>
+                    <td>@cliente.Direccion</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+@code {
+    public List<Clientes> ListaClientes { get; set; } = new List<Clientes>();
+
+    protected override void OnInitialized()
+    {
+        CargarClientes();
+    }
+
+    private void CargarClientes()
+    {
+        ListaClientes = clientesBLL.Listar(l => true);
+    }
+}

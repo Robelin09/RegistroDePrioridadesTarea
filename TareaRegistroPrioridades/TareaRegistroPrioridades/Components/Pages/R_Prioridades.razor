@@ -23,7 +23,7 @@
                 <ValidationMessage For="@(() => prioridades.Descripcion)" />
             </div>
             <div>
-                <label>D&iacuteas Compromiso:</label>
+                <label>D&iacuteas Compromiso</label>
                 <InputNumber @bind-Value="prioridades.DiasCompromiso" class="form-control"></InputNumber>
                 <ValidationMessage For="@(() => prioridades.DiasCompromiso)" />
             </div>
@@ -36,6 +36,9 @@
         </div>
     </div>
     <h3>@Mensaje</h3>
+
+
+
 </EditForm>
 
 @code {
@@ -43,6 +46,7 @@
     [Parameter]
     public int RegistroPrioridadId { get; set; }
     public string Mensaje = "Bienvenido";
+
     public Prioridades prioridades { get; set; } = new Prioridades();
 
     protected override void OnInitialized()
