@@ -23,7 +23,7 @@ namespace TareaRegistroPrioridades.Modelo
         [Required(ErrorMessage = "Este campo es Obligatorio")]
         public string RNC { get; set; }
 
-        [StringLength(50, ErrorMessage = "No se puede exceder el limite de 50 caracteres")]
+        [EmailAddress(ErrorMessage = "El Email no es valido")]
         [Required(ErrorMessage = "Este campo es Obligatorio")]
         public string Email { get; set; }
 
