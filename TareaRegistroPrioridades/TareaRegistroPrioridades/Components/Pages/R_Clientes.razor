@@ -122,14 +122,11 @@ void Nuevo()
         nombreexistente = clientesbll.Listar(c => c.Nombres == clientes.Nombres && c.ClienteId != clientes.ClienteId).Any();
         rncexistente = clientesbll.Listar(c => c.RNC == clientes.RNC && c.ClienteId != clientes.ClienteId).Any();
 
-        // Verificar si existe un nombre o RNC duplicado y retornar falso en ese caso
         if (nombreexistente || rncexistente)
         {
             Mensaje = "El nombre o RNC ya existe";
             return false;
         }
-
-        // Si no hay duplicados, los datos son válidos
         return true;
     }
     void Eliminar()
