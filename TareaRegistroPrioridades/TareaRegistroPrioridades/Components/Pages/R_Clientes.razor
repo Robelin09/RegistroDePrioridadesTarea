@@ -21,7 +21,7 @@
                 </div>
                 <div>
                     <label>Nombres</label>
-                    <InputText @bind-Value="clientes.Nombres" class="form-control"></InputText>
+                <InputText @bind-Value="clientes.Nombres" placeholder="Ej: Robelin Concepcion" class="form-control"></InputText>
                     <validationMessage For="@(() => clientes.Nombres)" />
                         @if (nombreexistente)
                         {
@@ -30,17 +30,17 @@
                 </div>
                 <div>
                 <label>T&eacutelefono:</label>
-                    <InputText @bind-Value="clientes.Telefono" class="form-control"></InputText>
+                <InputText @bind-Value="clientes.Telefono" placeholder="Ej: 8092551542" class="form-control"></InputText>
                     <validationMessage For="@(() => clientes.Telefono)"/>
                 </div>
                 <div>
                     <label>Celular</label>
-                    <InputText @bind-Value="clientes.Celular" class="form-control"></InputText>
+                <InputText @bind-Value="clientes.Celular" placeholder="Ej: 8096159699" class="form-control"></InputText>
                     <validationMessage For="@(() => clientes.Celular)"/>
                 </div>
                 <div>
                     <label>RNC</label>
-                    <InputText @bind-Value="clientes.RNC" class="form-control"></InputText>
+                <InputText @bind-Value="clientes.RNC" placeholder="Ej: 40254845213" class="form-control"></InputText>
                     <validationMessage For="@(() => clientes.RNC)"/>
                         @if (rncexistente)
                         {
@@ -49,12 +49,12 @@
                 </div>
                 <div>
                     <label>Email</label>
-                    <InputText @bind-Value="clientes.Email" class="form-control"></InputText>
+                <InputText @bind-Value="clientes.Email" placeholder="Ej: Fulano@gmail.com" class="form-control"></InputText>
                     <validationMessage For="@(() => clientes.Email)"/>
                 </div>
                 <div>
                     <label>Direcci&oacuten</label>
-                    <InputText @bind-Value="clientes.Direccion" class="form-control"></InputText>
+                <InputText @bind-Value="clientes.Direccion" placeholder="Ej: SFM, Vista Del Valle #25" class="form-control"></InputText>
                     <validationMessage For="@(() => clientes.Direccion)"/>
                 </div>
             </div>
