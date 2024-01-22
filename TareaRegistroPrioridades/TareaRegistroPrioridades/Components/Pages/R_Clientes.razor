@@ -15,13 +15,18 @@
             <div class="card-body">
                 <label>ID</label>
                 <div class="input-group">
-                    <InputNumber @bind-Value="clientes.ClienteId" class="id-input"></InputNumber>
+                    <InputNumber min="0" @bind-Value="clientes.ClienteId" class="id-input"></InputNumber>
                     <button type="button" class="btn btn-primary bi bi-search" @onclick="Buscar"></button>
+
                 </div>
                 <div>
                     <label>Nombres</label>
                     <InputText @bind-Value="clientes.Nombres" class="form-control"></InputText>
                     <validationMessage For="@(() => clientes.Nombres)" />
+                        @if (nombreexistente)
+                        {
+                            <p class="text-danger">El nombre ya existe</p>
+                        }
                 </div>
                 <div>
                 <label>T&eacutelefono:</label>
@@ -37,6 +42,10 @@
                     <label>RNC</label>
                     <InputText @bind-Value="clientes.RNC" class="form-control"></InputText>
                     <validationMessage For="@(() => clientes.RNC)"/>
+                        @if (rncexistente)
+                        {
+                            <p class="text-danger">El RNC ya existe</p>
+                        }
                 </div>
                 <div>
                     <label>Email</label>
@@ -63,6 +72,8 @@
     [Parameter]
     public int RegistroClientesId { get; set; }
     public string Mensaje = " ";
+    private bool nombreexistente = false;
+    private bool rncexistente = false;
 
     public Clientes clientes { get; set; } = new Clientes();
 
@@ -106,12 +117,21 @@ void Nuevo()
         }
     }
 
-bool Validar()
+    public bool Validar()
     {
-        bool esValido = true;
-        return esValido;
-    }
+        nombreexistente = clientesbll.Listar(c => c.Nombres == clientes.Nombres && c.ClienteId != clientes.ClienteId).Any();
+        rncexistente = clientesbll.Listar(c => c.RNC == clientes.RNC && c.ClienteId != clientes.ClienteId).Any();
 
+        // Verificar si existe un nombre o RNC duplicado y retornar falso en ese caso
+        if (nombreexistente || rncexistente)
+        {
+            Mensaje = "El nombre o RNC ya existe";
+            return false;
+        }
+
+        // Si no hay duplicados, los datos son válidos
+        return true;
+    }
     void Eliminar()
     {
         if (!clientesbll.Existe(clientes.ClienteId))
