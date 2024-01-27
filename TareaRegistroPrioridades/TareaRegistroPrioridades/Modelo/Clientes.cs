@@ -15,7 +15,7 @@ namespace TareaRegistroPrioridades.Modelo
         [Required(ErrorMessage = "Este campo es Obligatorio")]
         public string? Telefono { get; set; }
 
-        [StringLength(10, ErrorMessage ="No se puede exceder el limite de 10 caracteres numericos")]
+        [StringLength(10, ErrorMessage = "No se puede exceder el limite de 10 caracteres numericos")]
         [Required(ErrorMessage = "Este campo es Obligatorio")]
         public string? Celular { get; set; }
 

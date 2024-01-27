@@ -10,8 +10,8 @@ using TareaRegistroPrioridades.DAL;
 namespace TareaRegistroPrioridades.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20240120214047_clientes")]
-    partial class clientes
+    [Migration("20240127222006_Inicial")]
+    partial class Inicial
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,9 +25,10 @@ namespace TareaRegistroPrioridades.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Celular")
+                    b.Property<string>("Celular")
+                        .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Direccion")
                         .IsRequired()
@@ -36,7 +37,6 @@ namespace TareaRegistroPrioridades.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nombres")
@@ -44,13 +44,15 @@ namespace TareaRegistroPrioridades.Migrations
                         .HasMaxLength(70)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("RNC")
+                    b.Property<string>("RNC")
+                        .IsRequired()
                         .HasMaxLength(11)
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("Telefono")
+                    b.Property<string>("Telefono")
+                        .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("ClienteId");
 

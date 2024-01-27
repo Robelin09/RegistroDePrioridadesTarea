@@ -55,6 +55,6 @@ namespace TareaRegistroPrioridades.BLL
                     .Where(Criterio)
                     .AsNoTracking()
                     .ToList();
-        }       
+        }
     }
 }

@@ -22,9 +22,10 @@ namespace TareaRegistroPrioridades.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("Celular")
+                    b.Property<string>("Celular")
+                        .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("Direccion")
                         .IsRequired()
@@ -33,7 +34,6 @@ namespace TareaRegistroPrioridades.Migrations
 
                     b.Property<string>("Email")
                         .IsRequired()
-                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Nombres")
@@ -41,13 +41,15 @@ namespace TareaRegistroPrioridades.Migrations
                         .HasMaxLength(70)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("RNC")
+                    b.Property<string>("RNC")
+                        .IsRequired()
                         .HasMaxLength(11)
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
-                    b.Property<int>("Telefono")
+                    b.Property<string>("Telefono")
+                        .IsRequired()
                         .HasMaxLength(10)
-                        .HasColumnType("INTEGER");
+                        .HasColumnType("TEXT");
 
                     b.HasKey("ClienteId");
 
@@ -56,7 +58,7 @@ namespace TareaRegistroPrioridades.Migrations
 
             modelBuilder.Entity("TareaRegistroPrioridades.Modelo.Prioridades", b =>
                 {
-                    b.Property<int>("ClientesId")
+                    b.Property<int>("PrioridadId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -67,9 +69,9 @@ namespace TareaRegistroPrioridades.Migrations
                     b.Property<int>("DiasCompromiso")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("ClientesId");
+                    b.HasKey("PrioridadId");
 
-                    b.ToTable("Clientes");
+                    b.ToTable("Prioridades");
                 });
 #pragma warning restore 612, 618
         }
