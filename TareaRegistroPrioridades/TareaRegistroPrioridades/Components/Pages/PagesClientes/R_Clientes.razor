@@ -1,6 +1,7 @@
 ﻿@page "/RegistroClientes"
-@page "/RegistroClientes/{RegistroClientesId:int}"
-@inject ClientesBLL clientesbll
+@page "/RegistroClientes/{ClientesId:int}"
+@inject ClientesSERVICES clientesservices
+@inject NavigationManager Navigation
 @rendermode InteractiveServer
 
 <PageTitle>Registro de Clientes</PageTitle>
@@ -20,7 +21,7 @@
 
                 </div>
                 <div>
-                    <label>Nombres</label>
+                    <label>Nombres:</label>
                 <InputText @bind-Value="clientes.Nombres" placeholder="Ej: Robelin Concepcion" class="form-control"></InputText>
                     <validationMessage For="@(() => clientes.Nombres)" />
                         @if (nombreexistente)
@@ -34,12 +35,12 @@
                     <validationMessage For="@(() => clientes.Telefono)"/>
                 </div>
                 <div>
-                    <label>Celular</label>
+                    <label>Celular:</label>
                 <InputText @bind-Value="clientes.Celular" placeholder="Ej: 8096159699" class="form-control"></InputText>
                     <validationMessage For="@(() => clientes.Celular)"/>
                 </div>
                 <div>
-                    <label>RNC</label>
+                    <label>RNC:</label>
                 <InputText @bind-Value="clientes.RNC" placeholder="Ej: 40254845213" class="form-control"></InputText>
                     <validationMessage For="@(() => clientes.RNC)"/>
                         @if (rncexistente)
@@ -48,20 +49,19 @@
                         }
                 </div>
                 <div>
-                    <label>Email</label>
+                    <label>Email:</label>
                 <InputText @bind-Value="clientes.Email" placeholder="Ej: Fulano@gmail.com" class="form-control"></InputText>
                     <validationMessage For="@(() => clientes.Email)"/>
                 </div>
                 <div>
-                    <label>Direcci&oacuten</label>
+                    <label>Direcci&oacuten:</label>
                 <InputText @bind-Value="clientes.Direccion" placeholder="Ej: SFM, Vista Del Valle #25" class="form-control"></InputText>
                     <validationMessage For="@(() => clientes.Direccion)"/>
                 </div>
             </div>
             <div class="card-footer">
-            <button type="button" class="btn btn-primary" @onclick="Nuevo">Nuevo <i class="bi bi-file-earmark-diff-fill" /></button>
+            <button type="button" class="btn btn-outline-primary" @onclick="Atras">Volver <i class="bi bi-arrow-return-left" /></button>
             <button type="submit" class="btn btn-success">Guardar <i class="bi bi-floppy-fill" /></button>
-            <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar <i class="bi bi-trash-fill" /></button>
             </div>
         </div>
         <h4>@Mensaje</h4>
@@ -70,7 +70,7 @@
 @code {
 
     [Parameter]
-    public int RegistroClientesId { get; set; }
+    public int ClientesId { get; set; }
     public string Mensaje = " ";
     private bool nombreexistente = false;
     private bool rncexistente = false;
@@ -79,19 +79,20 @@
 
 protected override void OnInitialized()
     {
-        if (RegistroClientesId > 0)
+        if (ClientesId > 0)
         {
-            this.clientes.ClienteId = RegistroClientesId;
+            this.clientes.ClienteId = ClientesId;
             this.Buscar();
         }
     }
 
-    void Buscar()
+    public void Buscar()
     {
-        var clientesEncontrada = clientesbll.Buscar(clientes.ClienteId);
-        if (clientesEncontrada != null)
+        var clienteEncontrado = clientesservices.Buscar(clientes.ClienteId);
+
+        if (clienteEncontrado != null)
         {
-            Modelo.Clientes clientesEncontrada1 = clientesEncontrada;
+          this.clientes = clienteEncontrado;
         }
     }
 
@@ -109,7 +110,7 @@ void Nuevo()
             return;
         }
         {
-            if (clientesbll.Guardar(this.clientes))
+            if (clientesservices.Guardar(this.clientes))
             {
                 this.Nuevo();
                 Mensaje = "Sus datos han sido guardados correctamente.";
@@ -119,8 +120,8 @@ void Nuevo()
 
     public bool Validar()
     {
-        nombreexistente = clientesbll.Listar(c => c.Nombres == clientes.Nombres && c.ClienteId != clientes.ClienteId).Any();
-        rncexistente = clientesbll.Listar(c => c.RNC == clientes.RNC && c.ClienteId != clientes.ClienteId).Any();
+        nombreexistente = clientesservices.Listar(c => c.Nombres == clientes.Nombres && c.ClienteId != clientes.ClienteId).Any();
+        rncexistente = clientesservices.Listar(c => c.RNC == clientes.RNC && c.ClienteId != clientes.ClienteId).Any();
 
         if (nombreexistente || rncexistente)
         {
@@ -129,16 +130,9 @@ void Nuevo()
         }
         return true;
     }
-    void Eliminar()
+   
+    void Atras()
     {
-        if (!clientesbll.Existe(clientes.ClienteId))
-        {
-            Mensaje = "No existen datos para eliminar";
-            return;
-        }
-        if (clientesbll.Eliminar(this.clientes))
-        {
-            Mensaje = "Datos Eliminados";
-        }
+        Navigation.NavigateTo("DetalleClientes");
     }
 }

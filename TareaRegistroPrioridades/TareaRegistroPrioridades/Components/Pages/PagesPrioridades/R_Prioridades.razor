@@ -1,6 +1,7 @@
 ﻿@page "/RegistroPrioridad"
 @page "/RegistroPrioridad/{RegistroPrioridadId:int}"
-@inject Prioridadbll prioridadbll
+@inject PrioridadSERVICES prioridadservices
+@inject NavigationManager Navigation
 @rendermode InteractiveServer
 <PageTitle>Registro de Prioridad</PageTitle>
 
@@ -9,7 +10,7 @@
 
     <div class="card">
         <div class="card-header">
-            <h1>Registro Prioridad</h1>
+            <h1>Registro de Prioridades</h1>
         </div>
         <div class="card-body">
             <label>ID:</label>
@@ -30,22 +31,17 @@
             
         </div>
         <div class="card-footer">
-            <button type="button" class="btn btn-primary" @onclick="Nuevo">Nuevo <i class="bi bi-file-earmark-diff-fill" /></button>
-            <button type="submit" class="btn btn-success">Guardar <i class="bi bi-search"></i></button>
-            <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar <i class="bi bi-archive-fill" /></button>
+            <button type="button" class="btn btn-outline-primary" @onclick="Atras">Volver <i class="bi bi-arrow-return-left" /></button>
+            <button type="submit" class="btn btn-success">Guardar <i class="bi bi-floppy-fill"></i></button>
         </div>
     </div>
     <h3>@Mensaje</h3>
-
-
-
 </EditForm>
 
 @code {
-
     [Parameter]
     public int RegistroPrioridadId { get; set; }
-    public string Mensaje = "Bienvenido";
+    public string Mensaje = " ";
 
     public Prioridades prioridades { get; set; } = new Prioridades();
 
@@ -57,14 +53,14 @@
             this.Buscar();
         }
     }
-    void Buscar()
+    public void Buscar()
     {
-        var prioridadesEncontrada = prioridadbll.Buscar(prioridades.PrioridadId);
-        if (prioridadesEncontrada != null)
-        {
-            Modelo.Prioridades prioridadesEncontrada1 = prioridadesEncontrada;
+        var prioridadEncontrada = prioridadservices.Buscar(prioridades.PrioridadId);
 
-        }
+        if (prioridadEncontrada != null)
+        {
+            this.prioridades = prioridadEncontrada;
+    }
     }
     void Nuevo()
     {
@@ -78,7 +74,7 @@
             return;
         }
         {
-            if (prioridadbll.Guardar(this.prioridades))
+            if (prioridadservices.Guardar(this.prioridades))
             {
                 this.Nuevo();
                 Mensaje = "Sus datos han sido guardados correctamente.";
@@ -90,16 +86,8 @@
         bool esValido = true;
         return esValido;
     }
-    void Eliminar()
+    void Atras()
     {
-        if (!prioridadbll.Existe(prioridades.PrioridadId))
-        {
-            Mensaje = "No existe esta prioridad para eliminar";
-            return;
-        }
-        if (prioridadbll.Eliminar(this.prioridades))
-        {
-            Mensaje = "Datos Eliminados";
-        }
+        Navigation.NavigateTo("DetallePrioridad");
     }
 }
