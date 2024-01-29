@@ -19,8 +19,8 @@ namespace TareaRegistroPrioridades
             builder.Services.AddDbContext<Contexto>(options =>
             options.UseSqlite(ConStr));
 
-            builder.Services.AddScoped<Prioridadbll>();
-            builder.Services.AddScoped<ClientesBLL>();
+            builder.Services.AddScoped<PrioridadSERVICES>();
+            builder.Services.AddScoped<ClientesSERVICES>();
 
             var app = builder.Build();
 
