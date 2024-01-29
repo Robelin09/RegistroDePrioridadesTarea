@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using TareaRegistroPrioridades.BLL;
 using TareaRegistroPrioridades.Components;
 using TareaRegistroPrioridades.DAL;
+using TareaRegistroPrioridades.SERVICES;
 
 namespace TareaRegistroPrioridades
 {
@@ -21,6 +21,7 @@ namespace TareaRegistroPrioridades
 
             builder.Services.AddScoped<PrioridadSERVICES>();
             builder.Services.AddScoped<ClientesSERVICES>();
+            builder.Services.AddScoped<TicketsSERVICES>();
 
             var app = builder.Build();
 

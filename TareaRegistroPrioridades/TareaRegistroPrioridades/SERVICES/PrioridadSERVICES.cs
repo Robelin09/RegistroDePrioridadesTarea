@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using TareaRegistroPrioridades.DAL;
 using TareaRegistroPrioridades.Modelo;
 
-namespace TareaRegistroPrioridades.BLL
+namespace TareaRegistroPrioridades.SERVICES
 {
     public class PrioridadSERVICES
     {
