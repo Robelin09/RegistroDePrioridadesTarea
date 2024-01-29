@@ -1,0 +1,73 @@
+﻿@page "/EliminarPrioridad"
+@page "/EliminarPrioridad/{PrioridadId:int}"
+@inject PrioridadSERVICES prioridadservices
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<div class="card">
+    <div class="card-header">
+        <h1>¿Desea Eliminar Esta Prioridad?</h1>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Detalles de Prioridad</h5>
+        <dl class="row">
+            <dt class="col-sm-3">PrioridadId:</dt>
+            <dd class="col-sm-9">@prioridades.PrioridadId</dd>
+
+            <dt class="col-sm-3">Descripción:</dt>
+            <dd class="col-sm-9">@prioridades.Descripcion</dd>
+
+            <dt class="col-sm-3">Días Compromiso:</dt>
+            <dd class="col-sm-9">@prioridades.DiasCompromiso</dd>
+        </dl>
+    </div>
+    <div class="card-footer text-lg-center">
+        <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar</button>
+        <button type="button" class="btn btn-outline-primary" @onclick="Atras">Volver <i class="bi bi-arrow-return-left" /></button>
+    </div>
+
+</div>
+
+@code {
+    [Parameter] 
+
+    public int PrioridadId { get; set; }
+
+    public Prioridades prioridades { get; set; } = new Prioridades();
+
+    protected override void OnInitialized()
+    {
+        if (PrioridadId > 0)
+        {
+            prioridades.PrioridadId = PrioridadId;
+            this.Buscar();
+        }
+    }
+
+    public void Buscar()
+    {
+        var prioridadEncontrada = prioridadservices.Buscar(prioridades.PrioridadId);
+
+        if (prioridadEncontrada != null)
+        {
+            this.prioridades = prioridadEncontrada;
+        }
+    }
+
+    void Eliminar()
+    {
+        if (!prioridadservices.Existe(prioridades.PrioridadId))
+        {
+           
+            return;
+        }
+        if (prioridadservices.Eliminar(this.prioridades))
+        {
+           Atras();
+        }
+    }
+    void Atras()
+    {
+        Navigation.NavigateTo("DetallePrioridad");
+    }
+}

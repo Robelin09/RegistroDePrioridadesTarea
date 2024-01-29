@@ -1,0 +1,88 @@
+﻿@page "/EliminarCliente"
+@page "/EliminarCliente/{ClienteId:int}"
+@inject ClientesSERVICES clientesservices
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<div class="card">
+    <div class="card-header">
+        <h1>¿Desea Eliminar este Cliente?</h1>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Detalles de Clientes</h5>
+        <dl class="row">
+            <dt class="col-sm-3">ClienteId:</dt>
+            <dd class="col-sm-9">@clientes.ClienteId</dd>
+
+            <dt class="col-sm-3">Nombres:</dt>
+            <dd class="col-sm-9">@clientes.Nombres</dd>
+
+            <dt class="col-sm-3">T&eacutelefono:</dt>
+            <dd class="col-sm-9">@clientes.Telefono</dd>
+
+            <dt class="col-sm-3">Celular:</dt>
+            <dd class="col-sm-9">@clientes.Celular</dd>
+
+            <dt class="col-sm-3">RNC:</dt>
+            <dd class="col-sm-9">@clientes.RNC</dd>
+
+            <dt class="col-sm-3">Email:</dt>
+            <dd class="col-sm-9">@clientes.Email</dd>
+
+            <dt class="col-sm-3">Direcci&oacuten:</dt>
+            <dd class="col-sm-9">@clientes.Direccion</dd>
+        </dl>
+    </div>
+    <div class="card-footer text-lg-center">
+        <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar</button>
+        <button type="button" class="btn btn-outline-primary" @onclick="Atras">Volver <i class="bi bi-arrow-return-left" /></button>
+    </div>
+
+</div>
+
+
+@code {
+
+[Parameter]
+
+    public int ClienteId { get; set; }
+
+    public Clientes clientes { get; set; } = new Clientes();
+
+    protected override void OnInitialized()
+    {
+        if (ClienteId > 0)
+        {
+            clientes.ClienteId = ClienteId;
+            this.Buscar();
+        }
+    }
+
+    public void Buscar()
+    {
+        var prioridadEncontrada = clientesservices.Buscar(clientes.ClienteId);
+
+        if (prioridadEncontrada != null)
+        {
+            this.clientes = prioridadEncontrada;
+        }
+    }
+
+    void Eliminar()
+    {
+        if (!clientesservices.Existe(clientes.ClienteId))
+        {
+           
+            return;
+        }
+        if (clientesservices.Eliminar(this.clientes))
+        {
+            Atras();
+        }
+    }
+
+    void Atras()
+    {
+        Navigation.NavigateTo("DetalleClientes");
+    }
+}

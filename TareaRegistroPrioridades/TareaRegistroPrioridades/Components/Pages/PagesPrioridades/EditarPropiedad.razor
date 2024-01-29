@@ -1,0 +1,99 @@
+﻿@page "/EditarPrioridad"
+@page "/EditarPrioridad/{EditarPrioridadId:int}"
+@inject PrioridadSERVICES prioridadservices
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+<PageTitle>Editar Prioridad</PageTitle>
+
+<EditForm Model="prioridades" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+
+    <div class="card">
+        <div class="card-header">
+            <h1>Editar Prioridad</h1>
+        </div>
+        <div class="card-body">
+            <label>ID:</label>
+            <div class="input-group">
+                <InputNumber @bind-Value="prioridades.PrioridadId" class="id-input"></InputNumber>
+                <button type="button" class="btn btn-primary bi bi-search" @onclick="Buscar"></button>
+            </div>
+            <div>
+                <label>Descripci&oacuten:</label>
+                <InputText @bind-Value="prioridades.Descripcion" class="form-control"></InputText>
+                <ValidationMessage For="@(() => prioridades.Descripcion)" />
+            </div>
+            <div>
+                <label>D&iacuteas Compromiso</label>
+                <InputNumber @bind-Value="prioridades.DiasCompromiso" class="form-control"></InputNumber>
+                <ValidationMessage For="@(() => prioridades.DiasCompromiso)" />
+            </div>
+
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-outline-primary" @onclick="Atras">Volver <i class="bi bi-arrow-return-left" /></button>
+            <button type="submit" class="btn btn-success">Modificar <i class="bi bi-floppy-fill"></i></button>
+           
+        </div>
+    </div>
+    <h3>@Mensaje</h3>
+
+
+
+</EditForm>
+
+@code {
+
+    [Parameter]
+    public int EditarPrioridadId { get; set; }
+    public string Mensaje = " ";
+
+    public Prioridades prioridades { get; set; } = new Prioridades();
+
+    protected override void OnInitialized()
+    {
+        if (EditarPrioridadId > 0)
+        {
+            this.prioridades.PrioridadId = EditarPrioridadId;
+            this.Buscar();
+        }
+    }
+    public void Buscar()
+    {
+        var prioridadEncontrada = prioridadservices.Buscar(prioridades.PrioridadId);
+
+        if (prioridadEncontrada != null)
+        {
+            this.prioridades = prioridadEncontrada;
+        }
+    }
+    void Nuevo()
+    {
+        this.prioridades = new Prioridades();
+        Mensaje = " ";
+    }
+    void Guardar()
+    {
+        if (!Validar())
+        {
+            return;
+        }
+        {
+            if (prioridadservices.Guardar(this.prioridades))
+            {
+                this.Nuevo();
+                Mensaje = "Sus datos han sido Modificados correctamente.";
+            }
+        }
+    }
+    bool Validar()
+    {
+        bool esValido = true;
+        return esValido;
+    }
+    
+    void Atras()
+    {
+        Navigation.NavigateTo("DetallePrioridad");
+    }
+}
