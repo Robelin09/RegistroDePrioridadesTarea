@@ -1,0 +1,64 @@
+﻿@page "/EliminarSistema"
+@page "/EliminarSistema/{SistemaId:int}"
+@inject SistemaSERVICES sistemaservices
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<div class="card">
+    <div class="card-header">
+        <h1>¿Desea Eliminar este Sistema?</h1>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Detalles de Sistema</h5>
+        <dl class="row">
+            <dt class="col-sm-3">TicketId:</dt>
+            <dd class="col-sm-9">@sistema.SistemaId</dd>
+
+            <dt class="col-sm-3">Fecha:</dt>
+            <dd class="col-sm-9">@sistema.NombredeSistema</dd>
+        </dl>
+    </div>
+    <div class="card-footer text-lg-center">
+        <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar</button>
+        <button type="button" class="btn btn-outline-primary" @onclick="Atras">Volver <i class="bi bi-arrow-return-left" /></button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int SistemaId { get; set; }
+    public Sistema sistema { get; set; } = new Sistema();
+
+    protected override void OnInitialized()
+    {
+        if (SistemaId > 0)
+        {
+            sistema.SistemaId = SistemaId;
+            this.Buscar();
+        }
+    }
+    public void Buscar()
+    {
+        var sistemaEncontrado = sistemaservices.Buscar(sistema.SistemaId);
+
+        if (sistemaEncontrado != null)
+        {
+            this.sistema = sistemaEncontrado;
+        }
+    }
+    void Eliminar()
+    {
+        if (!sistemaservices.Existe(sistema.SistemaId))
+        {
+            return;
+        }
+        if (sistemaservices.Eliminar(this.sistema))
+        {
+            Atras();
+        }
+    }
+    void Atras()
+    {
+        Navigation.NavigateTo("/DetalleSistemas");
+    }
+}
