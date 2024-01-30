@@ -1,0 +1,82 @@
+﻿@page "/EliminarTicket"
+@page "/EliminarTicket/{TicketId:int}"
+@inject TicketsSERVICES ticketsservices
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<div class="card">
+    <div class="card-header">
+        <h1>¿Desea Eliminar este Ticket?</h1>
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Detalles de Tickets</h5>
+        <dl class="row">
+            <dt class="col-sm-3">TicketId:</dt>
+            <dd class="col-sm-9">@tickets.TicketId</dd>
+
+            <dt class="col-sm-3">Fecha:</dt>
+            <dd class="col-sm-9">@tickets.Fecha</dd>
+
+            <dt class="col-sm-3">ClienteId:</dt>
+            <dd class="col-sm-9">@tickets.ClienteId</dd>
+
+            <dt class="col-sm-3">SistemaId:</dt>
+            <dd class="col-sm-9">@tickets.SistemaId</dd>
+
+            <dt class="col-sm-3">PrioridadId:</dt>
+            <dd class="col-sm-9">@tickets.PrioridadId</dd>
+
+            <dt class="col-sm-3">Solicitado por:</dt>
+            <dd class="col-sm-9">@tickets.SolicitadoPor</dd>
+
+            <dt class="col-sm-3">Asunto:</dt>
+            <dd class="col-sm-9">@tickets.Asunto</dd>
+
+            <dt class="col-sm-3">Descripci&oacuten:</dt>
+            <dd class="col-sm-9">@tickets.Descripcion</dd>
+        </dl>
+    </div>
+    <div class="card-footer text-lg-center">
+        <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar</button>
+        <button type="button" class="btn btn-outline-primary" @onclick="Atras">Volver <i class="bi bi-arrow-return-left" /></button>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int TicketId { get; set; }
+    public Tickets tickets { get; set; } = new Tickets();
+
+protected override void OnInitialized()
+    {
+        if (TicketId > 0)
+        {
+            tickets.TicketId = TicketId;
+            this.Buscar();
+        }
+    }
+    public void Buscar()
+    {
+        var ticketEncontrado = ticketsservices.Buscar(tickets.TicketId);
+
+        if (ticketEncontrado != null)
+        {
+            this.tickets = ticketEncontrado;
+        }
+    }
+void Eliminar()
+    {
+        if (!ticketsservices.Existe(tickets.TicketId))
+        {
+            return;
+        }
+        if (ticketsservices.Eliminar(this.tickets))
+        {
+            Atras();
+        }
+    }
+void Atras()
+    {
+        Navigation.NavigateTo("/DetalleTickets");
+    }
+}
