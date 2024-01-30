@@ -22,6 +22,7 @@ namespace TareaRegistroPrioridades
             builder.Services.AddScoped<PrioridadSERVICES>();
             builder.Services.AddScoped<ClientesSERVICES>();
             builder.Services.AddScoped<TicketsSERVICES>();
+            builder.Services.AddScoped<SistemaSERVICES>();
 
             var app = builder.Build();
 
