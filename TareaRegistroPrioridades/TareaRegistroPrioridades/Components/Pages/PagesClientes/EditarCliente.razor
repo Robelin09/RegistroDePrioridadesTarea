@@ -5,10 +5,8 @@
 @rendermode InteractiveServer
 
 <PageTitle>Editar Cliente</PageTitle>
-
 <EditForm Model="clientes" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
-
     <div class="card">
         <div class="card-header">
             <h1>Editar Cliente</h1>
@@ -66,7 +64,6 @@
 </EditForm>
 
 @code {
-
     [Parameter]
     public int ClientesId { get; set; }
     public string Mensaje = " ";
@@ -83,7 +80,6 @@
             this.Buscar();
         }
     }
-
     public void Buscar()
     {
         var clienteEncontrado = clientesservices.Buscar(clientes.ClienteId);
@@ -93,13 +89,6 @@
             this.clientes = clienteEncontrado;
         }
     }
-
-    void Nuevo()
-    {
-        this.clientes = new Clientes();
-        Mensaje = " ";
-    }
-
     void Guardar()
     {
         if (!Validar())
@@ -110,12 +99,11 @@
         {
             if (clientesservices.Guardar(this.clientes))
             {
-                this.Nuevo();
                 Mensaje = "Sus datos han sido modificados correctamente.";
+                Atras();
             }
         }
     }
-
     public bool Validar()
     {
         nombreexistente = clientesservices.Listar(c => c.Nombres == clientes.Nombres && c.ClienteId != clientes.ClienteId).Any();
@@ -128,7 +116,6 @@
         }
         return true;
     }
-   
     void Atras()
     {
         Navigation.NavigateTo("DetalleClientes");

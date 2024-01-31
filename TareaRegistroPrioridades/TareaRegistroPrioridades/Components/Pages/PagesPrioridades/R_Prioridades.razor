@@ -16,7 +16,6 @@
             <label>ID:</label>
             <div class="input-group">
                 <InputNumber @bind-Value="prioridades.PrioridadId" class="id-input"></InputNumber>
-                <button type="button" class="btn btn-primary bi bi-search" @onclick="Buscar"></button>
             </div>
             <div>
                 <label>Descripci&oacuten:</label>
@@ -42,7 +41,6 @@
     [Parameter]
     public int RegistroPrioridadId { get; set; }
     public string Mensaje = " ";
-
     public Prioridades prioridades { get; set; } = new Prioridades();
 
     protected override void OnInitialized()
@@ -60,12 +58,7 @@
         if (prioridadEncontrada != null)
         {
             this.prioridades = prioridadEncontrada;
-    }
-    }
-    void Nuevo()
-    {
-        this.prioridades = new Prioridades();
-        Mensaje = " ";
+        }
     }
     void Guardar()
     {
@@ -76,8 +69,8 @@
         {
             if (prioridadservices.Guardar(this.prioridades))
             {
-                this.Nuevo();
                 Mensaje = "Sus datos han sido guardados correctamente.";
+                Atras();
             }
         }
     }

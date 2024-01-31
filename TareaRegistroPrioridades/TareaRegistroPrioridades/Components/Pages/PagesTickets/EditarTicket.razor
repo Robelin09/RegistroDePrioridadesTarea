@@ -8,13 +8,11 @@
 @rendermode InteractiveServer
 
 <PageTitle>Editar Ticket</PageTitle>
-
 <EditForm Model="tickets" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
-
     <div class="card">
         <div class="card-header">
-            <hi>Registro de Tickets</hi>
+            <hi>Editar Ticket</hi>
         </div>
         <div class=" card-body">
             <label>TicketId</label>
@@ -126,6 +124,7 @@
             if (ticketsservices.Guardar(this.tickets))
             {
                 Mensaje = "Sus datos han sido Modificados correctamente.";
+                Atras();
             }
         }
     }

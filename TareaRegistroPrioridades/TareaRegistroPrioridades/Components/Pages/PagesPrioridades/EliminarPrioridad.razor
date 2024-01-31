@@ -25,14 +25,11 @@
         <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar</button>
         <button type="button" class="btn btn-outline-primary" @onclick="Atras">Volver <i class="bi bi-arrow-return-left" /></button>
     </div>
-
 </div>
 
 @code {
     [Parameter] 
-
     public int PrioridadId { get; set; }
-
     public Prioridades prioridades { get; set; } = new Prioridades();
 
     protected override void OnInitialized()
@@ -43,7 +40,6 @@
             this.Buscar();
         }
     }
-
     public void Buscar()
     {
         var prioridadEncontrada = prioridadservices.Buscar(prioridades.PrioridadId);
@@ -53,7 +49,6 @@
             this.prioridades = prioridadEncontrada;
         }
     }
-
     void Eliminar()
     {
         if (!prioridadservices.Existe(prioridades.PrioridadId))

@@ -3,11 +3,10 @@
 @inject PrioridadSERVICES prioridadservices
 @inject NavigationManager Navigation
 @rendermode InteractiveServer
-<PageTitle>Editar Prioridad</PageTitle>
 
+<PageTitle>Editar Prioridad</PageTitle>
 <EditForm Model="prioridades" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
-
     <div class="card">
         <div class="card-header">
             <h1>Editar Prioridad</h1>
@@ -16,7 +15,6 @@
             <label>ID:</label>
             <div class="input-group">
                 <InputNumber @bind-Value="prioridades.PrioridadId" class="id-input"></InputNumber>
-                <button type="button" class="btn btn-primary bi bi-search" @onclick="Buscar"></button>
             </div>
             <div>
                 <label>Descripci&oacuten:</label>
@@ -28,18 +26,13 @@
                 <InputNumber @bind-Value="prioridades.DiasCompromiso" class="form-control"></InputNumber>
                 <ValidationMessage For="@(() => prioridades.DiasCompromiso)" />
             </div>
-
         </div>
         <div class="card-footer">
             <button type="button" class="btn btn-outline-primary" @onclick="Atras">Volver <i class="bi bi-arrow-return-left" /></button>
             <button type="submit" class="btn btn-success">Modificar <i class="bi bi-floppy-fill"></i></button>
-           
         </div>
     </div>
     <h3>@Mensaje</h3>
-
-
-
 </EditForm>
 
 @code {
@@ -47,7 +40,6 @@
     [Parameter]
     public int EditarPrioridadId { get; set; }
     public string Mensaje = " ";
-
     public Prioridades prioridades { get; set; } = new Prioridades();
 
     protected override void OnInitialized()
@@ -67,11 +59,6 @@
             this.prioridades = prioridadEncontrada;
         }
     }
-    void Nuevo()
-    {
-        this.prioridades = new Prioridades();
-        Mensaje = " ";
-    }
     void Guardar()
     {
         if (!Validar())
@@ -81,8 +68,8 @@
         {
             if (prioridadservices.Guardar(this.prioridades))
             {
-                this.Nuevo();
                 Mensaje = "Sus datos han sido Modificados correctamente.";
+                Atras();
             }
         }
     }
@@ -91,7 +78,6 @@
         bool esValido = true;
         return esValido;
     }
-    
     void Atras()
     {
         Navigation.NavigateTo("DetallePrioridad");

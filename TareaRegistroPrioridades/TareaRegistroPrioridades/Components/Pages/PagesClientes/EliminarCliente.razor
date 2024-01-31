@@ -37,16 +37,11 @@
         <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar</button>
         <button type="button" class="btn btn-outline-primary" @onclick="Atras">Volver <i class="bi bi-arrow-return-left" /></button>
     </div>
-
 </div>
 
-
 @code {
-
 [Parameter]
-
     public int ClienteId { get; set; }
-
     public Clientes clientes { get; set; } = new Clientes();
 
     protected override void OnInitialized()
@@ -57,7 +52,6 @@
             this.Buscar();
         }
     }
-
     public void Buscar()
     {
         var prioridadEncontrada = clientesservices.Buscar(clientes.ClienteId);
@@ -67,7 +61,6 @@
             this.clientes = prioridadEncontrada;
         }
     }
-
     void Eliminar()
     {
         if (!clientesservices.Existe(clientes.ClienteId))
@@ -80,7 +73,6 @@
             Atras();
         }
     }
-
     void Atras()
     {
         Navigation.NavigateTo("DetalleClientes");

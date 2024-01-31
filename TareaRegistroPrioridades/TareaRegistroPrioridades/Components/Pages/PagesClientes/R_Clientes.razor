@@ -5,7 +5,6 @@
 @rendermode InteractiveServer
 
 <PageTitle>Registro de Clientes</PageTitle>
-
 <EditForm Model="clientes" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />    
 
@@ -17,8 +16,6 @@
                 <label>ID</label>
                 <div class="input-group">
                     <InputNumber min="0" @bind-Value="clientes.ClienteId" class="id-input"></InputNumber>
-                    <button type="button" class="btn btn-primary bi bi-search" @onclick="Buscar"></button>
-
                 </div>
                 <div>
                     <label>Nombres:</label>
@@ -85,7 +82,6 @@ protected override void OnInitialized()
             this.Buscar();
         }
     }
-
     public void Buscar()
     {
         var clienteEncontrado = clientesservices.Buscar(clientes.ClienteId);
@@ -95,13 +91,6 @@ protected override void OnInitialized()
           this.clientes = clienteEncontrado;
         }
     }
-
-void Nuevo()
-    {
-        this.clientes = new Clientes();
-        Mensaje = " ";
-    }
-
     void Guardar()
     {
         if (!Validar())
@@ -112,12 +101,11 @@ void Nuevo()
         {
             if (clientesservices.Guardar(this.clientes))
             {
-                this.Nuevo();
                 Mensaje = "Sus datos han sido guardados correctamente.";
+                Atras();
             }
         }
     }
-
     public bool Validar()
     {
         nombreexistente = clientesservices.Listar(c => c.Nombres == clientes.Nombres && c.ClienteId != clientes.ClienteId).Any();
@@ -130,7 +118,6 @@ void Nuevo()
         }
         return true;
     }
-   
     void Atras()
     {
         Navigation.NavigateTo("DetalleClientes");

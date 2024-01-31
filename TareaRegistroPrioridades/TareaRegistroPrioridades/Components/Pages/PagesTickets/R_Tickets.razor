@@ -97,8 +97,6 @@ protected override void OnInitialized()
         {
             this.tickets.TicketId = TicketId;
             this.Buscar();
-
-
         }
             ListaClientes = clientesservices.Listar(t => true);
             ListaSistemas = sistemaservices.Listar(t => true);
@@ -124,6 +122,7 @@ protected override void OnInitialized()
             if (ticketsservices.Guardar(this.tickets))
             {
                 Mensaje = "Sus datos han sido guardados correctamente.";
+                Atras();
             }
         }
     }

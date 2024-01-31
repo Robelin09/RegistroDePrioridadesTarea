@@ -8,7 +8,6 @@
         <a href="/RegistroClientes" class="btn btn-outline-primary">Crear</a>
     </div>
   
-
     <div class="table-responsive">
         <table class="table table-striped table-bordered">
             <thead>
@@ -22,7 +21,6 @@
                     <th>Direcci&oacuten</th>
                     <th>Editar</th>
                     <th>Eliminar</th>
-
                 </tr>
             </thead>
             <tbody>
@@ -46,7 +44,6 @@
     </div>
 </div>
 
-
 @code {
     [Parameter]
     public int ClienteId { get; set; }
@@ -58,7 +55,6 @@
     {
         ListaClientes = clientesservices.Listar(t => true);
     }
-
     public void Buscar()
     {
         if (filtrar > 0)
@@ -70,10 +66,8 @@
             ListaClientes = clientesservices.Listar(t => true);
         }
     }
-
     public void Recargar()
     {
         ListaClientes = clientesservices.Listar(t => true);
     }
-
 }
