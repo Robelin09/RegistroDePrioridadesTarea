@@ -7,6 +7,9 @@ namespace TareaRegistroPrioridades.DAL
     {
         public DbSet<Prioridades> Prioridades { get; set; }
         public DbSet<Clientes> Clientes { get; set; }
+        public DbSet<Tickets> Tickets { get; set; }
+        public DbSet<Sistema> Sistema { get; set; }
+
         public Contexto(DbContextOptions<Contexto> options) : base(options)  {  }
         
     }

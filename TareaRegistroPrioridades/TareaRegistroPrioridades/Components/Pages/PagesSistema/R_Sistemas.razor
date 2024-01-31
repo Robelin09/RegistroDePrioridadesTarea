@@ -1,0 +1,81 @@
+﻿@page "/RegistroSistemas"
+@page "/RegistroSistemas/{SistemaId:int}"
+@inject SistemaSERVICES sistemaservices
+@inject NavigationManager Navigation
+@rendermode InteractiveServer
+
+<PageTitle>Registro de Sistemas</PageTitle>
+<EditForm Model="sistemas" OnValidSubmit="Guardar">
+    <DataAnnotationsValidator />
+    <div class="card">
+        <div class="cardaccordion-header">
+            <h1>Registro de Sistemas</h1>
+        </div>
+        <div class="card-body">
+            <label>SistemaId</label>
+            <div class="input-group">
+                <InputNumber min="0" @bind-Value="sistemas.SistemaId" class="id-input"></InputNumber>
+            </div>
+            <div>
+                <label>Nombre del Sistema:</label>
+                <InputText @bind-Value="sistemas.NombredeSistema" class="form-control"></InputText>
+                <ValidationMessage For="@(() => sistemas.NombredeSistema)" />
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="button" class="btn btn-outline-primary" @onclick="Atras">Volver <i class="bi bi-arrow-return-left" /></button>
+            <button type="submit" class="btn btn-success">Guardar <i class="bi bi-floppy-fill" /></button>
+        </div>
+    </div>
+    <h3>@Mensaje</h3>
+</EditForm>
+
+@code {
+    [Parameter]
+    public int SistemaId { get; set; }
+    public Sistema sistemas { get; set; } = new Sistema();
+    public string Mensaje = " ";
+
+    protected override void OnInitialized()
+    {
+        if (SistemaId > 0)
+        {
+            this.sistemas.SistemaId = SistemaId;
+            this.Buscar();
+        }
+    }
+    public void Buscar()
+    {
+        var sistemaEncontrado = sistemaservices.Buscar(sistemas.SistemaId);
+
+        if (sistemaEncontrado != null)
+        {
+            this.sistemas = sistemaEncontrado;
+        }
+    }
+    void Guardar()
+    {
+        if (!Validar())
+        {
+            Mensaje = "Sus datos no han sido guardados correctamente.";
+            return;
+        }
+            if (sistemaservices.Guardar(this.sistemas))
+            {
+                Mensaje = "Sus datos han sido guardados correctamente.";
+            }
+        
+    }
+bool Validar()
+    {
+        if (string.IsNullOrEmpty(sistemas.NombredeSistema))
+        {
+            return false;
+        }
+        return true;
+    }
+    void Atras()
+    {
+        Navigation.NavigateTo("/DetalleSistemas");
+    }
+}

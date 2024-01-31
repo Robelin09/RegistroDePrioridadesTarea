@@ -1,0 +1,59 @@
+﻿@page "/DetalleTickets"
+@page "/DetalleTickets/{TicketId:int}"
+@inject TicketsSERVICES ticketsservices
+
+<div class="card">
+    <div class="card-header">
+        <h3>Detalles de Tickets</h3>
+        <a href="/RegistroTickets" class="btn btn-outline-primary">Crear</a>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr>
+                    <th>TicketId</th>
+                    <th>Fecha</th>
+                    <th>ClienteId</th>
+                    <th>SistemaId</th>
+                    <th>PrioridadId</th>
+                    <th>Solicitado por</th>
+                    <th>Asunto</th>
+                    <th>Descripci&oacuten</th>
+                    <th>Editar</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                 @foreach (var ticket in ListaTickets)
+                {
+                    <tr>
+                        <td><a href="/RegistroTickets/@ticket.TicketId">@ticket.TicketId</a></td>
+                        <td>@ticket.Fecha</td>
+                        <td>@ticket.ClienteId</td>
+                        <td>@ticket.SistemaId</td>
+                        <td>@ticket.PrioridadId</td>
+                        <td>@ticket.SolicitadoPor</td>
+                        <td>@ticket.Asunto</td>
+                        <td>@ticket.Descripcion</td>
+                        <td><a href="/EditarTicket/@ticket.TicketId" class="bi bi-pencil-square"></a></td>
+                        <td><a href="/EliminarTicket/@ticket.TicketId" class="bi bi-trash"></a></td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+@code {
+[Parameter]
+    public int TicketId { get; set; }
+    public Tickets tickets { get; set; } = new Tickets();
+    public List<Tickets> ListaTickets { get; set; } = new List<Tickets>();
+  
+
+    protected override void OnInitialized()
+    {
+        ListaTickets = ticketsservices.Listar(t => true);
+    }    
+}
