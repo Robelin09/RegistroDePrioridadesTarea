@@ -90,6 +90,7 @@
     public List<Clientes> ListaClientes { get; set; } = new List<Clientes>();
     public List<Prioridades> ListaPrioridades { get; set; } = new List<Prioridades>();
     public Tickets tickets { get; set; } = new Tickets();
+   
 
 protected override void OnInitialized()
     {
@@ -101,6 +102,7 @@ protected override void OnInitialized()
             ListaClientes = clientesservices.Listar(t => true);
             ListaSistemas = sistemaservices.Listar(t => true);
             ListaPrioridades = prioridadservices.Listar(t => true);
+            tickets.Fecha = DateTime.Now;
     }
     public void Buscar()
     {
