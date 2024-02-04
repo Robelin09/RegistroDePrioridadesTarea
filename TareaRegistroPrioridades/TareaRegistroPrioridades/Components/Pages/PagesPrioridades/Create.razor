@@ -7,7 +7,6 @@
 
 <EditForm Model="prioridad" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
-
     <div class="card">
         <div class="card-header">
             <h1>Registro de Prioridades</h1>
@@ -27,7 +26,6 @@
                 <InputNumber @bind-Value="prioridad.DiasCompromiso" class="form-control"></InputNumber>
                 <ValidationMessage For="@(() => prioridad.DiasCompromiso)" />
             </div>
-            
         </div>
         <div class="card-footer">
             <button type="button" class="btn btn-outline-primary" @onclick="Atras">Volver <i class="bi bi-arrow-return-left" /></button>

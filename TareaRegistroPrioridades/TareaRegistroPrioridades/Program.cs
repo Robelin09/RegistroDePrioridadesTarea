@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using TareaRegistroPrioridades.Components;
 using TareaRegistroPrioridades.DAL;
-using TareaRegistroPrioridades.SERVICES;
+using TareaRegistroPrioridades.Service;
 
 namespace TareaRegistroPrioridades
 {
@@ -19,10 +19,10 @@ namespace TareaRegistroPrioridades
             builder.Services.AddDbContext<Contexto>(options =>
             options.UseSqlite(ConStr));
 
-            builder.Services.AddScoped<PrioridadSERVICES>();
-            builder.Services.AddScoped<ClientesSERVICES>();
-            builder.Services.AddScoped<TicketsSERVICES>();
-            builder.Services.AddScoped<SistemaSERVICES>();
+            builder.Services.AddScoped<PrioridadService>();
+            builder.Services.AddScoped<ClienteService>();
+            builder.Services.AddScoped<TicketService>();
+            builder.Services.AddScoped<SistemaService>();
 
             var app = builder.Build();
 
