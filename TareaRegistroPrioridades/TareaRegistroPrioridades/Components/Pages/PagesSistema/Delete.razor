@@ -1,6 +1,6 @@
 ﻿@page "/EliminarSistema"
 @page "/EliminarSistema/{SistemaId:int}"
-@inject SistemaSERVICES sistemaservices
+@inject SistemaService sistemaservice
 @inject NavigationManager Navigation
 @rendermode InteractiveServer
 
@@ -18,41 +18,41 @@
             <dd class="col-sm-9">@sistema.NombredeSistema</dd>
         </dl>
     </div>
-    <div class="card-footer text-lg-center">
-        <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar</button>
+    <div class="card-footer">
         <button type="button" class="btn btn-outline-primary" @onclick="Atras">Volver <i class="bi bi-arrow-return-left" /></button>
+        <button type="button" class="btn btn-outline-danger" @onclick="Eliminar">Eliminar</button>
     </div>
 </div>
 
 @code {
     [Parameter]
     public int SistemaId { get; set; }
-    public Sistema sistema { get; set; } = new Sistema();
+    public Sistemas sistema { get; set; } = new Sistemas();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         if (SistemaId > 0)
         {
             sistema.SistemaId = SistemaId;
-            this.Buscar();
+            await this.Buscar();
         }
     }
-    public void Buscar()
+    public async Task Buscar()
     {
-        var sistemaEncontrado = sistemaservices.Buscar(sistema.SistemaId);
+        var sistemaEncontrado =await sistemaservice.Buscar(sistema.SistemaId);
 
         if (sistemaEncontrado != null)
         {
             this.sistema = sistemaEncontrado;
         }
     }
-    void Eliminar()
+    public async Task Eliminar()
     {
-        if (!sistemaservices.Existe(sistema.SistemaId))
+        if (!await sistemaservice.Existe(sistema.SistemaId))
         {
             return;
         }
-        if (sistemaservices.Eliminar(this.sistema))
+        if (await sistemaservice.Eliminar(this.sistema))
         {
             Atras();
         }

@@ -1,6 +1,6 @@
 ﻿@page "/DetalleSistemas"
 @page "/DetalleSistemas/{SistemaId:int}"
-@inject SistemaSERVICES sistemaservices
+@inject SistemaService sistemaservice
 
 <div class="card">
     <div class="card-header">
@@ -35,11 +35,11 @@
 @code {
 [Parameter]
     public int SistemaId { get; set; }
-    public Sistema sistema { get; set; } = new Sistema();
-    public List<Sistema> ListaSistemas { get; set; } = new List<Sistema>();
+    public Sistemas sistema { get; set; } = new Sistemas();
+    public List<Sistemas> ListaSistemas { get; set; } = new List<Sistemas>();
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        ListaSistemas = sistemaservices.Listar(t => true);
+        ListaSistemas =await sistemaservice.Listar(t => true);
     }
 }

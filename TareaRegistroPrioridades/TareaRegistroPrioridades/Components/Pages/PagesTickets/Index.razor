@@ -1,6 +1,6 @@
 ﻿@page "/DetalleTickets"
 @page "/DetalleTickets/{TicketId:int}"
-@inject TicketsSERVICES ticketsservices
+@inject TicketService ticketservice
 
 <div class="card">
     <div class="card-header">
@@ -50,8 +50,8 @@
     public Tickets tickets { get; set; } = new Tickets();
     public List<Tickets> ListaTickets { get; set; } = new List<Tickets>();
   
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        ListaTickets = ticketsservices.Listar(t => true);
+        ListaTickets =await ticketservice.Listar(t => true);
     }    
 }

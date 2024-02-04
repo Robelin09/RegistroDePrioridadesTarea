@@ -1,6 +1,6 @@
 ﻿@page "/EliminarTicket"
 @page "/EliminarTicket/{TicketId:int}"
-@inject TicketsSERVICES ticketsservices
+@inject TicketService ticketservice
 @inject NavigationManager Navigation
 @rendermode InteractiveServer
 
@@ -12,70 +12,70 @@
         <h5 class="card-title">Detalles de Tickets</h5>
         <dl class="row">
             <dt class="col-sm-3">TicketId:</dt>
-            <dd class="col-sm-9">@tickets.TicketId</dd>
+            <dd class="col-sm-9">@ticket.TicketId</dd>
 
             <dt class="col-sm-3">Fecha:</dt>
-            <dd class="col-sm-9">@tickets.Fecha</dd>
+            <dd class="col-sm-9">@ticket.Fecha</dd>
 
             <dt class="col-sm-3">ClienteId:</dt>
-            <dd class="col-sm-9">@tickets.ClienteId</dd>
+            <dd class="col-sm-9">@ticket.ClienteId</dd>
 
             <dt class="col-sm-3">SistemaId:</dt>
-            <dd class="col-sm-9">@tickets.SistemaId</dd>
+            <dd class="col-sm-9">@ticket.SistemaId</dd>
 
             <dt class="col-sm-3">PrioridadId:</dt>
-            <dd class="col-sm-9">@tickets.PrioridadId</dd>
+            <dd class="col-sm-9">@ticket.PrioridadId</dd>
 
             <dt class="col-sm-3">Solicitado por:</dt>
-            <dd class="col-sm-9">@tickets.SolicitadoPor</dd>
+            <dd class="col-sm-9">@ticket.SolicitadoPor</dd>
 
             <dt class="col-sm-3">Asunto:</dt>
-            <dd class="col-sm-9">@tickets.Asunto</dd>
+            <dd class="col-sm-9">@ticket.Asunto</dd>
 
             <dt class="col-sm-3">Descripci&oacuten:</dt>
-            <dd class="col-sm-9">@tickets.Descripcion</dd>
+            <dd class="col-sm-9">@ticket.Descripcion</dd>
         </dl>
     </div>
-    <div class="card-footer text-lg-center">
-        <button type="button" class="btn btn-danger" @onclick="Eliminar">Eliminar</button>
+    <div class="card-footer">
         <button type="button" class="btn btn-outline-primary" @onclick="Atras">Volver <i class="bi bi-arrow-return-left" /></button>
+        <button type="button" class="btn btn-outline-danger" @onclick="Eliminar">Eliminar</button>
     </div>
 </div>
 
 @code {
     [Parameter]
     public int TicketId { get; set; }
-    public Tickets tickets { get; set; } = new Tickets();
+    public Tickets ticket { get; set; } = new Tickets();
 
-protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         if (TicketId > 0)
         {
-            tickets.TicketId = TicketId;
-            this.Buscar();
+            ticket.TicketId = TicketId;
+            await this.Buscar();
         }
     }
-    public void Buscar()
+    public async Task Buscar()
     {
-        var ticketEncontrado = ticketsservices.Buscar(tickets.TicketId);
+        var ticketEncontrado = await ticketservice.Buscar(ticket.TicketId);
 
         if (ticketEncontrado != null)
         {
-            this.tickets = ticketEncontrado;
+            this.ticket = ticketEncontrado;
         }
     }
-void Eliminar()
+    public async Task Eliminar()
     {
-        if (!ticketsservices.Existe(tickets.TicketId))
+        if (!await ticketservice.Existe(ticket.TicketId))
         {
             return;
         }
-        if (ticketsservices.Eliminar(this.tickets))
+        if (await ticketservice.Eliminar(this.ticket))
         {
             Atras();
         }
     }
-void Atras()
+    void Atras()
     {
         Navigation.NavigateTo("/DetalleTickets");
     }

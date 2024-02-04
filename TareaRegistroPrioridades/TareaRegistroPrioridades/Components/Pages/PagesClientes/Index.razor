@@ -1,6 +1,6 @@
 ﻿@page "/DetalleClientes"
 @page "/DetalleClientes/{ClienteId:int}"
-@inject ClientesSERVICES clientesservices
+@inject ClienteService clienteservice
 
 <div class="card">
     <div class="card-header">
@@ -47,27 +47,27 @@
 @code {
     [Parameter]
     public int ClienteId { get; set; }
-    public Clientes clientes { get; set; } = new Clientes();
+    public Clientes cliente { get; set; } = new Clientes();
     public List<Clientes> ListaClientes { get; set; } = new List<Clientes>();
     public int filtrar { get; set; }
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        ListaClientes = clientesservices.Listar(t => true);
+        ListaClientes = await clienteservice.Listar(t => true);
     }
-    public void Buscar()
+    public async Task Buscar()
     {
         if (filtrar > 0)
         {
-            ListaClientes = clientesservices.Listar(t => t.ClienteId == filtrar);
+            ListaClientes =await clienteservice.Listar(t => t.ClienteId == filtrar);
         }
         else
         {
-            ListaClientes = clientesservices.Listar(t => true);
+            ListaClientes =await clienteservice.Listar(t => true);
         }
     }
-    public void Recargar()
+    public async Task Recargar()
     {
-        ListaClientes = clientesservices.Listar(t => true);
+        ListaClientes =await clienteservice.Listar(t => true);
     }
 }

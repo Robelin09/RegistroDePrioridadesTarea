@@ -1,11 +1,11 @@
 ﻿@page "/EditarSistema"
 @page "/EditarSistema/{SistemaId:int}"
-@inject SistemaSERVICES sistemaservices
+@inject SistemaService sistemaservice
 @inject NavigationManager Navigation
 @rendermode InteractiveServer
 
 <PageTitle>Ediatar Sistema</PageTitle>
-<EditForm Model="sistemas" OnValidSubmit="Guardar">
+<EditForm Model="sistema" OnValidSubmit="Guardar">
     <DataAnnotationsValidator />
     <div class="card">
         <div class="cardaccordion-header">
@@ -14,12 +14,12 @@
         <div class="card-body">
             <label>SistemaId</label>
             <div class="input-group">
-                <InputNumber min="0" @bind-Value="sistemas.SistemaId" class="id-input"></InputNumber>
+                <InputNumber min="0" @bind-Value="sistema.SistemaId" class="id-input"></InputNumber>
             </div>
             <div>
                 <label>Nombre del Sistema:</label>
-                <InputText @bind-Value="sistemas.NombredeSistema" class="form-control"></InputText>
-                <ValidationMessage For="@(() => sistemas.NombredeSistema)" />
+                <InputText @bind-Value="sistema.NombredeSistema" class="form-control"></InputText>
+                <ValidationMessage For="@(() => sistema.NombredeSistema)" />
             </div>
         </div>
         <div class="card-footer">
@@ -33,41 +33,45 @@
 @code {
     [Parameter]
     public int SistemaId { get; set; }
-    public Sistema sistemas { get; set; } = new Sistema();
+    public Sistemas sistema { get; set; } = new Sistemas();
     public string Mensaje = " ";
 
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
         if (SistemaId > 0)
         {
-            this.sistemas.SistemaId = SistemaId;
-            this.Buscar();
+            this.sistema.SistemaId = SistemaId;
+            await this.Buscar();
         }
     }
-    public void Buscar()
+    public async Task Buscar()
     {
-        var sistemaEncontrado = sistemaservices.Buscar(sistemas.SistemaId);
+        var sistemaEncontrado = await sistemaservice.Buscar(sistema.SistemaId);
 
         if (sistemaEncontrado != null)
         {
-            this.sistemas = sistemaEncontrado;
+            this.sistema = sistemaEncontrado;
         }
     }
-    void Guardar()
+    public async Task Guardar()
     {
         if (!Validar())
         {
-            Mensaje = "Sus datos no han sido Modificados correctamente.";
+            Mensaje = "Sus datos no han sido guardados correctamente.";
             return;
         }
-        if (sistemaservices.Guardar(this.sistemas))
+        if (await sistemaservice.Guardar(this.sistema))
         {
-            Mensaje = "Sus datos han sido Modificados correctamente.";
+            Mensaje = "Sus datos han sido guardados correctamente.";
             Atras();
         }
     }
     bool Validar()
     {
+        if (string.IsNullOrEmpty(sistema.NombredeSistema))
+        {
+            return false;
+        }
         return true;
     }
     void Atras()
