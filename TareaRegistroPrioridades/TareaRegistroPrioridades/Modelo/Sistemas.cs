@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 namespace TareaRegistroPrioridades.Modelo
 {
-    public class Sistema
+    public class Sistemas
     {
         [Key]
         public int SistemaId { get; set; }
