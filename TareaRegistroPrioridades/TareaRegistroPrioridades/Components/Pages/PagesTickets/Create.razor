@@ -22,7 +22,7 @@
             <div>
                 <label>Fecha:</label>
                 <InputDate @bind-Value="ticket.Fecha" class="form-control"></InputDate>
-                <validationMessage For="@(() => ticket.Fecha)" />
+                <ValidationMessage For="@(() => ticket.Fecha)" />
             </div>
 
             <div class="colum-3">
@@ -61,17 +61,17 @@
             <div>
                 <label>Solicitado por:</label>
                 <InputText @bind-Value="ticket.SolicitadoPor" class="form-control"></InputText>
-                    <validationMessage For="@(() => ticket.SolicitadoPor)" />
+                    <ValidationMessage For="@(() => ticket.SolicitadoPor)" />
             </div>
             <div>
                <label>Asunto:</label>
                 <InputText @bind-Value="ticket.Asunto" class="form-control"></InputText>
-                    <validationMessage For="@(() => ticket.Asunto)" />  
+                    <ValidationMessage For="@(() => ticket.Asunto)" />  
             </div>
             <div>
                 <label>Descripci&oacuten:</label>
                 <InputText @bind-Value="ticket.Descripcion" class="form-control"></InputText>
-                    <validationMessage For="@(() => ticket.Descripcion)" />
+                    <ValidationMessage For="@(() => ticket.Descripcion)" />
             </div>
         </div>
         <div class="card-footer">
